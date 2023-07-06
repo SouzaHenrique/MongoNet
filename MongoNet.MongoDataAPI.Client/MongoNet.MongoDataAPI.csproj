@@ -7,7 +7,7 @@
   </PropertyGroup>
 
    <PropertyGroup>
-    <PackageId>NuGet.Workflow</PackageId>
+    <PackageId>NuGet.MongoNet</PackageId>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/SouzaHenrique/MongoNet</RepositoryUrl>
   </PropertyGroup>
