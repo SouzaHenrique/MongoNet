@@ -1,9 +1,11 @@
 on:
   push:
     tags:
-    - "v[0-9]+.[0-9]+.[0-9]+"
+    - "v[0-9]+.[0-9]+.[0-9]+" 
 jobs:
   build:
+    permissions:
+      packages: read|write
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
