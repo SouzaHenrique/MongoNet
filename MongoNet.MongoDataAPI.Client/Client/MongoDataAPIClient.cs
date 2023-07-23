@@ -337,6 +337,7 @@ namespace MongoNet.MongoDataAPI.Client
 
                     filter = filterOptions.Filter,
                     replacement = updateOptions.Replacement,
+                    upsert = updateOptions.IsUpsert
 
                 }, cancellationToken);
             }
