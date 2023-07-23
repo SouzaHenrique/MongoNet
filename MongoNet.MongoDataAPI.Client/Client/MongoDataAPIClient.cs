@@ -86,7 +86,7 @@ namespace MongoNet.MongoDataAPI.Client
             url.AppendPathSegment((apiOptions?.ApiId ?? ApiId))
                .AppendPathSegment($"endpoint/{requestOptions.EndPoint}/" +
                                   $"{requestOptions.Version}" +
-                                  $"/action/{ActionsEnum.UpdateMany.GetEnumDescription()}");
+                                  $"/action/{ActionsEnum.Find.GetEnumDescription()}");
 
             var request = url.WithHeader(ApiAuthOption, (apiOptions?.ApiKey ?? ApiKey));
 
