@@ -157,16 +157,18 @@ namespace MongoNet.MongoDataAPI.Client
                                   $"{requestOptions.Version}" +
                                   $"/action/{ActionsEnum.InsertOne.GetEnumDescription()}");
 
-            IFlurlRequest request = url.WithHeader("Content-Type", "application/json");
+            IFlurlRequest request = null;
 
             if (string.IsNullOrEmpty(apiOptions?.BearerToken) is false)
             {
-                request = url.WithHeader("Authorization", $"Bearer {apiOptions?.BearerToken}");
-                             
+                request = url.WithHeader("Authorization", $"Bearer {apiOptions?.BearerToken}")
+                             .WithHeader("Content-Type", "application/json");
+
             }
             else
             {
-                request = url.WithHeader(ApiAuthOption, (apiOptions?.ApiKey ?? ApiKey));
+                request = url.WithHeader(ApiAuthOption, (apiOptions?.ApiKey ?? ApiKey))
+                             .WithHeader("Content-Type", "application/json");
             }
 
             response = request.PostJsonAsync(new
@@ -209,16 +211,18 @@ namespace MongoNet.MongoDataAPI.Client
                                   $"{requestOptions.Version}" +
                                   $"/action/{ActionsEnum.InsertMany.GetEnumDescription()}");
 
-            IFlurlRequest request = url.WithHeader("Content-Type", "application/json");
+            IFlurlRequest request = null;
 
             if (string.IsNullOrEmpty(apiOptions?.BearerToken) is false)
             {
-                request = url.WithHeader("Authorization", $"Bearer {apiOptions?.BearerToken}");
+                request = url.WithHeader("Authorization", $"Bearer {apiOptions?.BearerToken}")
+                             .WithHeader("Content-Type", "application/json");
 
             }
             else
             {
-                request = url.WithHeader(ApiAuthOption, (apiOptions?.ApiKey ?? ApiKey));
+                request = url.WithHeader(ApiAuthOption, (apiOptions?.ApiKey ?? ApiKey))
+                             .WithHeader("Content-Type", "application/json");
             }
 
             response = request.PostJsonAsync(new
@@ -255,16 +259,18 @@ namespace MongoNet.MongoDataAPI.Client
                                   $"{requestOptions.Version}" +
                                   $"/action/{ActionsEnum.UpdateOne.GetEnumDescription()}");
 
-            IFlurlRequest request = url.WithHeader("Content-Type", "application/json");
+            IFlurlRequest request = null;
 
             if (string.IsNullOrEmpty(apiAccessOptions?.BearerToken) is false)
             {
-                request = url.WithHeader("Authorization", $"Bearer {apiAccessOptions?.BearerToken}");
+                request = url.WithHeader("Authorization", $"Bearer {apiAccessOptions?.BearerToken}")
+                             .WithHeader("Content-Type", "application/json");
 
             }
             else
             {
-                request = url.WithHeader(ApiAuthOption, (apiAccessOptions?.ApiKey ?? ApiKey));
+                request = url.WithHeader(ApiAuthOption, (apiAccessOptions?.ApiKey ?? ApiKey))
+                             .WithHeader("Content-Type", "application/json");
             }
 
             request.BeforeCall(RewriteBodyAsync);
@@ -305,16 +311,18 @@ namespace MongoNet.MongoDataAPI.Client
                                   $"{requestOptions.Version}" +
                                   $"/action/{ActionsEnum.UpdateMany.GetEnumDescription()}");
 
-            IFlurlRequest request = url.WithHeader("Content-Type", "application/json");
+            IFlurlRequest request = null;
 
             if (string.IsNullOrEmpty(apiAccessOptions?.BearerToken) is false)
             {
-                request = url.WithHeader("Authorization", $"Bearer {apiAccessOptions?.BearerToken}");
+                request = url.WithHeader("Authorization", $"Bearer {apiAccessOptions?.BearerToken}")
+                             .WithHeader("Content-Type", "application/json");
 
             }
             else
             {
-                request = url.WithHeader(ApiAuthOption, (apiAccessOptions?.ApiKey ?? ApiKey));
+                request = url.WithHeader(ApiAuthOption, (apiAccessOptions?.ApiKey ?? ApiKey))
+                             .WithHeader("Content-Type", "application/json");
             }
 
             request.BeforeCall(RewriteBodyAsync);
@@ -355,16 +363,18 @@ namespace MongoNet.MongoDataAPI.Client
                                   $"{requestOptions.Version}" +
                                   $"/action/{ActionsEnum.ReplaceOne.GetEnumDescription()}");
 
-            IFlurlRequest request = url.WithHeader("Content-Type", "application/json");
+            IFlurlRequest request = null;
 
             if (string.IsNullOrEmpty(apiAccessOptions?.BearerToken) is false)
             {
-                request = url.WithHeader("Authorization", $"Bearer {apiAccessOptions?.BearerToken}");
+                request = url.WithHeader("Authorization", $"Bearer {apiAccessOptions?.BearerToken}")
+                             .WithHeader("Content-Type", "application/json");
 
             }
             else
             {
-                request = url.WithHeader(ApiAuthOption, (apiAccessOptions?.ApiKey ?? ApiKey));
+                request = url.WithHeader(ApiAuthOption, (apiAccessOptions?.ApiKey ?? ApiKey))
+                             .WithHeader("Content-Type", "application/json");
             }
 
             request.BeforeCall(RewriteBodyAsync);
@@ -404,16 +414,19 @@ namespace MongoNet.MongoDataAPI.Client
                                   $"{requestOptions.Version}" +
                                   $"/action/{ActionsEnum.DeleteOne.GetEnumDescription()}");
 
-            IFlurlRequest request = url.WithHeader("Content-Type", "application/json");
+            IFlurlRequest request = null;
 
             if (string.IsNullOrEmpty(apiAccessOptions?.BearerToken) is false)
             {
-                request = url.WithHeader("Authorization", $"Bearer {apiAccessOptions?.BearerToken}");
+                request = url.WithHeader("Authorization", $"Bearer {apiAccessOptions?.BearerToken}")
+                             .WithHeader("Content-Type", "application/json");
+
 
             }
             else
             {
-                request = url.WithHeader(ApiAuthOption, (apiAccessOptions?.ApiKey ?? ApiKey));
+                request = url.WithHeader(ApiAuthOption, (apiAccessOptions?.ApiKey ?? ApiKey))
+                             .WithHeader("Content-Type", "application/json");
             }
 
             request.BeforeCall(RewriteBodyAsync);
@@ -451,16 +464,18 @@ namespace MongoNet.MongoDataAPI.Client
                                   $"{requestOptions.Version}" +
                                   $"/action/{ActionsEnum.DeleteMany.GetEnumDescription()}");
 
-            IFlurlRequest request = url.WithHeader("Content-Type", "application/json");
+            IFlurlRequest request = null;
 
             if (string.IsNullOrEmpty(apiAccessOptions?.BearerToken) is false)
             {
-                request = url.WithHeader("Authorization", $"Bearer {apiAccessOptions?.BearerToken}");
+                request = url.WithHeader("Authorization", $"Bearer {apiAccessOptions?.BearerToken}")
+                             .WithHeader("Content-Type", "application/json");
 
             }
             else
             {
-                request = url.WithHeader(ApiAuthOption, (apiAccessOptions?.ApiKey ?? ApiKey));
+                request = url.WithHeader(ApiAuthOption, (apiAccessOptions?.ApiKey ?? ApiKey))
+                             .WithHeader("Content-Type", "application/json");
             }
 
             request.BeforeCall(RewriteBodyAsync);
