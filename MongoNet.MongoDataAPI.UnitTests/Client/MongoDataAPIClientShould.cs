@@ -84,7 +84,7 @@ namespace MongoNet.MongoDataAPI.UnitTests.Client
 
             //assert
             Assert.NotNull(result);
-            result.Value.StatusCode.Should().Be(201);
+            result.StatusCode.Should().Be(201);
         }
 
         [Fact]
@@ -103,7 +103,7 @@ namespace MongoNet.MongoDataAPI.UnitTests.Client
 
             //assert
             Assert.NotNull(result);
-            result.Value.StatusCode.Should().Be(201);
+            result.StatusCode.Should().Be(201);
         }
 
         [Fact]
@@ -120,8 +120,8 @@ namespace MongoNet.MongoDataAPI.UnitTests.Client
 
             //assert
             Assert.NotNull(result);
-            result.Value.StatusCode.Should().Be(200);
-            var value = await result.Value.GetStringAsync();
+            result.StatusCode.Should().Be(200);
+            var value = await result.GetStringAsync();
         }
 
         [Fact]
@@ -137,8 +137,8 @@ namespace MongoNet.MongoDataAPI.UnitTests.Client
 
             //assert
             Assert.NotNull(result);
-            result.Value.StatusCode.Should().Be(200);
-            var value = await result.Value.GetStringAsync();
+            result.StatusCode.Should().Be(200);
+            var value = await result.GetStringAsync();
         }
 
         [Fact]
@@ -166,8 +166,8 @@ namespace MongoNet.MongoDataAPI.UnitTests.Client
 
             //assert
             Assert.NotNull(replacementResult);
-            replacementResult.Value.StatusCode.Should().Be(200);
-            var value = await replacementResult.Value.GetStringAsync();
+            replacementResult.StatusCode.Should().Be(200);
+            var value = await replacementResult.GetStringAsync();
         }
 
         [Fact]
@@ -194,8 +194,8 @@ namespace MongoNet.MongoDataAPI.UnitTests.Client
 
             //assert
             Assert.NotNull(replacementResult);
-            replacementResult.Value.StatusCode.Should().Be(200);
-            var value = await replacementResult.Value.GetStringAsync();
+            replacementResult.StatusCode.Should().Be(200);
+            var value = await replacementResult.GetStringAsync();
         }
 
         [Fact]
@@ -222,8 +222,8 @@ namespace MongoNet.MongoDataAPI.UnitTests.Client
 
             //assert
             Assert.NotNull(replacementResult);
-            replacementResult.Value.StatusCode.Should().Be(200);
-            var value = await replacementResult.Value.GetStringAsync();
+            replacementResult.StatusCode.Should().Be(200);
+            var value = await replacementResult.GetStringAsync();
         }
     }
 }
