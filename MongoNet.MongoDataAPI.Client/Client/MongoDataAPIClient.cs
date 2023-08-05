@@ -38,7 +38,10 @@ namespace MongoNet.MongoDataAPI.Client
         /// <param name="apiOptions">The API options.</param>
         /// <param name="requestOptions">The request options.</param>
         /// <returns>A <see cref="Result"/> that holds an <see cref="IFlurlResponse"/> instance.</returns>
-        public async Task<IFlurlResponse> FindOne(CancellationToken cancellationToken, ApiAccessOptions? apiOptions = null, RequestOptions? requestOptions = null)
+        public Task<IFlurlResponse> FindOne(CancellationToken cancellationToken,
+                                                  ApiAccessOptions?
+                                                  apiOptions = null,
+                                                  RequestOptions? requestOptions = null)
         {
             requestOptions ??= new RequestOptions { EndPoint = "data", Version = "v1", };
 
@@ -49,9 +52,18 @@ namespace MongoNet.MongoDataAPI.Client
                                   $"{requestOptions.Version}" +
                                   $"/action/{ActionsEnum.FindOne.GetEnumDescription()}");
 
-            var request = url.WithHeader(ApiAuthOption, (apiOptions?.ApiKey ?? ApiKey));
+            IFlurlRequest request = null;
 
-            var response = await request.PostJsonAsync(new
+            if (string.IsNullOrEmpty(apiOptions?.BearerToken) is false)
+            {
+                request = url.WithHeader("Authorization", $"Bearer {apiOptions?.BearerToken}");
+            }
+            else
+            {
+                request = url.WithHeader(ApiAuthOption, (apiOptions?.ApiKey ?? ApiKey));
+            }
+
+            var response = request.PostJsonAsync(new
             {
                 collection = Collection,
                 database = DataBase,
@@ -71,14 +83,17 @@ namespace MongoNet.MongoDataAPI.Client
         /// <param name="apiOptions">The API options.</param>
         /// <param name="requestOptions">The request options.</param>
         /// <returns>A <see cref="Result"/> that holds an <see cref="IFlurlResponse"/> instance.</returns>
-        public async Task<Result<IFlurlResponse>> FindMany(FilterOptions filterOptions, CancellationToken cancellationToken, ApiAccessOptions? apiOptions = null, RequestOptions? requestOptions = null)
+        public Task<IFlurlResponse> FindMany(FilterOptions filterOptions,
+                                             CancellationToken cancellationToken,
+                                             ApiAccessOptions? apiOptions = null,
+                                             RequestOptions? requestOptions = null)
         {
-            IFlurlResponse? response;
+            Task<IFlurlResponse>? response = null;
             requestOptions ??= new RequestOptions();
 
             if (filterOptions.Filter is null)
             {
-                return Result.Fail(new Error("Unable to complete the required action because the filter document is null."));
+                return response;
             }
 
             Url url = new(apiOptions?.ApiUrl ?? ApiUrl);
@@ -88,31 +103,31 @@ namespace MongoNet.MongoDataAPI.Client
                                   $"{requestOptions.Version}" +
                                   $"/action/{ActionsEnum.Find.GetEnumDescription()}");
 
-            var request = url.WithHeader(ApiAuthOption, (apiOptions?.ApiKey ?? ApiKey));
+            IFlurlRequest request = null;
 
-            try
+            if (string.IsNullOrEmpty(apiOptions?.BearerToken) is false)
             {
-                response = await request.PostJsonAsync(new
-                {
-                    collection = Collection,
-                    database = DataBase,
-                    dataSource = DataSource,
-
-                    filter = filterOptions.Filter,
-                    projection = filterOptions.Projection,
-                    sort = filterOptions.Sort,
-                    limit = filterOptions.Limit,
-                    skip = filterOptions.Skip,
-                }, cancellationToken);
+                request = url.WithHeader("Authorization", $"Bearer {apiOptions?.BearerToken}");
             }
-            catch (FlurlHttpException exception)
+            else
             {
-                return Result.Fail(new Error("Unable to complete the required action. " +
-                                             "A response with StatusCode different than 2xx was received.")
-                             .CausedBy(exception));
+                request = url.WithHeader(ApiAuthOption, (apiOptions?.ApiKey ?? ApiKey));
             }
 
-            return Result.Ok(response);
+            response = request.PostJsonAsync(new
+            {
+                collection = Collection,
+                database = DataBase,
+                dataSource = DataSource,
+
+                filter = filterOptions.Filter,
+                projection = filterOptions.Projection,
+                sort = filterOptions.Sort,
+                limit = filterOptions.Limit,
+                skip = filterOptions.Skip,
+            }, cancellationToken);
+
+            return response;
         }
 
         /// <summary>

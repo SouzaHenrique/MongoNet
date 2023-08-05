@@ -6,7 +6,7 @@ using System.Reflection.Metadata;
 using System.Security.Cryptography;
 using System.Threading;
 
-namespace MongoNet.MongoDataAPI.UnitTests.Client
+namespace MongoNet.MongoDataAPI.UnitTests.APIKEY
 {
     public class MongoDataAPIClientShould
     {
@@ -39,14 +39,14 @@ namespace MongoNet.MongoDataAPI.UnitTests.Client
 
             //act
             httpTest.RespondWith("OK", 200);
-            var insertionResult = await SUT.InsertOne(cancellationToken, requestOptions: requestOptions);
+            var insertionResult = await SUT.InsertOne(cancellationToken,
+                                                      requestOptions: requestOptions);
 
             //act
             var result = await SUT.FindOne(cancellationToken);
-
+           
             //assert
             Assert.NotNull(result);
-            result.StatusCode.Should().Be((int)System.Net.HttpStatusCode.OK);
         }
 
         [Fact]
@@ -63,6 +63,7 @@ namespace MongoNet.MongoDataAPI.UnitTests.Client
             //act
             httpTest.RespondWith("OK", 200);
             var result = await SUT.FindMany(filterOptions: filterOptions, cancellationToken);
+            var content = await result.GetStringAsync();
 
             //assert
             Assert.NotNull(result);

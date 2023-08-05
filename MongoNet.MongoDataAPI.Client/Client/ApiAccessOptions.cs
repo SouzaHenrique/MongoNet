@@ -12,5 +12,6 @@ namespace MongoNet.MongoDataAPI.Client
         public string? ApiUrl { get; set; } = null;
         public string? ApiId { get; set; } = null;
         public string? ApiKey { get; set; } = null;
+        public string? BearerToken { get; set; } = null;
     }
 }

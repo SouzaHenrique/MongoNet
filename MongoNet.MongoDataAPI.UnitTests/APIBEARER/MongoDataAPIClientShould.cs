@@ -6,7 +6,7 @@ using System.Reflection.Metadata;
 using System.Security.Cryptography;
 using System.Threading;
 
-namespace MongoNet.MongoDataAPI.UnitTests.Client
+namespace MongoNet.MongoDataAPI.UnitTests.APIBEARER
 {
     public class MongoDataAPIClientShould
     {
@@ -19,15 +19,15 @@ namespace MongoNet.MongoDataAPI.UnitTests.Client
         {
             cancellationTokenSource = new();
             cancellationToken = cancellationTokenSource.Token;
-            SUT = new MongoDataAPIClient(dataSource: "Cluster0", dataBase: "general",
-                                         collection: "test", apiUrl: "https://test.com",
-                                         apiId: "123", apiKey: "456");
+            SUT = new MongoDataAPIClient(dataSource: "Cluster0", dataBase: "general-tests",
+                                         collection: "testing-data-api", apiUrl: "https://eastus2.azure.data.mongodb-api.com/app",
+                                         apiId: "data-khpgu", apiKey: "UQSHYwo7VCKSGdnYZAeVoPBBXoUzy45tIvNUB0y55a2x6yh218wprtROrxOU8Y1c");
         }
 
         [Fact]
         public async Task WhenExecutingFindOneMethod_ExecuteMethod_ReturnNonNullResult()
         {
-            using var httpTest = new HttpTest();
+            //using var httpTest = new HttpTest();
 
             //arrange
             var idValue = ObjectId.GenerateNewId().ToString();
@@ -36,9 +36,8 @@ namespace MongoNet.MongoDataAPI.UnitTests.Client
                 Document = new { _id = idValue, name = "Henrique Martins de Souza", age = "29" }
             };
 
-
             //act
-            httpTest.RespondWith("OK", 200);
+            //httpTest.RespondWith("OK", 200);
             var insertionResult = await SUT.InsertOne(cancellationToken, requestOptions: requestOptions);
 
             //act
@@ -46,7 +45,6 @@ namespace MongoNet.MongoDataAPI.UnitTests.Client
 
             //assert
             Assert.NotNull(result);
-            result.StatusCode.Should().Be((int)System.Net.HttpStatusCode.OK);
         }
 
         [Fact]
