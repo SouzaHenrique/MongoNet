@@ -38,7 +38,8 @@ namespace MongoNet.MongoDataAPI.Client
         /// <param name="apiOptions">The API options.</param>
         /// <param name="requestOptions">The request options.</param>
         /// <returns>A <see cref="Result"/> that holds an <see cref="IFlurlResponse"/> instance.</returns>
-        public Task<IFlurlResponse> FindOne(CancellationToken cancellationToken,
+        public Task<IFlurlResponse> FindOne(FilterOptions filterOptions,
+                                            CancellationToken cancellationToken,
                                             ApiAccessOptions?
                                             apiOptions = null,
                                             RequestOptions? requestOptions = null)
@@ -68,7 +69,8 @@ namespace MongoNet.MongoDataAPI.Client
                 collection = Collection,
                 database = DataBase,
                 dataSource = DataSource,
-                projection = requestOptions.Projection
+                projection = requestOptions.Projection,
+                filter = filterOptions.Filter,
             }, cancellationToken);
 
             return response;
@@ -107,11 +109,13 @@ namespace MongoNet.MongoDataAPI.Client
 
             if (string.IsNullOrEmpty(apiOptions?.BearerToken) is false)
             {
-                request = url.WithHeader("Authorization", $"Bearer {apiOptions?.BearerToken}");
+                request = url.WithHeader("Authorization", $"Bearer {apiOptions?.BearerToken}")
+                             .WithHeader("Content-Type", "application/json");
             }
             else
             {
-                request = url.WithHeader(ApiAuthOption, (apiOptions?.ApiKey ?? ApiKey));
+                request = url.WithHeader(ApiAuthOption, (apiOptions?.ApiKey ?? ApiKey))
+                             .WithHeader("Content-Type", "application/json");
             }
 
             response = request.PostJsonAsync(new
@@ -292,8 +296,8 @@ namespace MongoNet.MongoDataAPI.Client
 
         public Task<IFlurlResponse> UpdateMany(FilterOptions filterOptions,
                                                UpdateOptions updateOptions,
-                                               CancellationToken cancellationToken, 
-                                               ApiAccessOptions? apiAccessOptions = null, 
+                                               CancellationToken cancellationToken,
+                                               ApiAccessOptions? apiAccessOptions = null,
                                                RequestOptions? requestOptions = null)
         {
             Task<IFlurlResponse>? response;
@@ -344,8 +348,8 @@ namespace MongoNet.MongoDataAPI.Client
 
         public Task<IFlurlResponse> ReplaceOne(FilterOptions filterOptions,
                                                UpdateOptions updateOptions,
-                                               CancellationToken cancellationToken, 
-                                               ApiAccessOptions? apiAccessOptions = null, 
+                                               CancellationToken cancellationToken,
+                                               ApiAccessOptions? apiAccessOptions = null,
                                                RequestOptions? requestOptions = null)
         {
             Task<IFlurlResponse>? response;
@@ -395,7 +399,7 @@ namespace MongoNet.MongoDataAPI.Client
         }
 
         public Task<IFlurlResponse> DeleteOne(FilterOptions filterOptions,
-                                              CancellationToken cancellationToken, 
+                                              CancellationToken cancellationToken,
                                               ApiAccessOptions? apiAccessOptions = null,
                                               RequestOptions? requestOptions = null)
         {
@@ -444,9 +448,9 @@ namespace MongoNet.MongoDataAPI.Client
             return response;
         }
 
-        public Task<IFlurlResponse> DeleteMany(FilterOptions filterOptions, 
-                                               CancellationToken cancellationToken, 
-                                               ApiAccessOptions? apiAccessOptions = null, 
+        public Task<IFlurlResponse> DeleteMany(FilterOptions filterOptions,
+                                               CancellationToken cancellationToken,
+                                               ApiAccessOptions? apiAccessOptions = null,
                                                RequestOptions? requestOptions = null)
         {
             Task<IFlurlResponse>? response;
@@ -510,7 +514,7 @@ namespace MongoNet.MongoDataAPI.Client
             if (string.IsNullOrWhiteSpace(contentReWrited) || call is null)
                 return;
 
-            call.HttpRequestMessage.Content = new CapturedStringContent(contentReWrited);          
+            call.HttpRequestMessage.Content = new CapturedStringContent(contentReWrited);
         }
     }
 }

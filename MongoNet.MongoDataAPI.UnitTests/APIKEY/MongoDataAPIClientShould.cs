@@ -43,7 +43,7 @@ namespace MongoNet.MongoDataAPI.UnitTests.APIKEY
                                                       requestOptions: requestOptions);
 
             //act
-            var result = await SUT.FindOne(cancellationToken);
+            var result = await SUT.FindOne(new FilterOptions { Filter = new { _id = idValue } }, cancellationToken);
            
             //assert
             Assert.NotNull(result);
